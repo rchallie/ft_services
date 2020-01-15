@@ -35,4 +35,4 @@ Tout ça, peut importe le fournisseur _(Google cloud, aws, virtual machines...)_
 - etc...
 
 ### Sources :
-	[xadki](https://www.youtube.com/watch?v=37VLg7mlHu8&list=PLn6POgpklwWqfzaosSgX2XEKpse5VY2v5&index=1)
+- [xadki](https://www.youtube.com/watch?v=37VLg7mlHu8&list=PLn6POgpklwWqfzaosSgX2XEKpse5VY2v5&index=1)
