@@ -17,6 +17,29 @@ Tout ça, peut importe le fournisseur _(Google cloud, aws, virtual machines...)_
 	- ensemble de conteuneurs qui à du sens
 	- avec un ou plusieurs conteneurs
 	- et une instance de kubernetes
+- services : 
+	- pour éviter la communications par ip (changeante car on est en conteneurs)
+	- communication par service : service > ip/port > pods
+	- un service est un couple ip/port qui permet de discuter entres les conteneurs
+- volumes :
+	- gestion des volumes (persistents ou non)
+	- ce sont des lieux d'échanges entre les pods
+	- lorsqu'il est à l'interieur des pods, il est non persistent
+	- et à l'exterieur il l'est
+- deployments : objet de gestion de déploiments
+	- création / suppression
+	- scaling : gestion de paramètres pour la montée en charge (ou réduction)
+- namespaces : cluster virtuel (ensemble de services)
+	- cloissone à l'intérieur du cluster (cohérence pour les droits, sécurté, cohérence général)
+
+### <u>Pré-requis :</u>
+#### Installer Kubernetes sous VM
+	> Config de la VM recommandé :
+	> 2 GB de ram
+	> 2 GPU
+	> ouverture réseau large entre les deux machines
+	> pas de swap
+
 
 <a name="definition"></a>
 ## <u>Définition :</u>
