@@ -11,28 +11,28 @@ Permet de lancer de multiples instances du même service en fonction de paramèt
 Tout ça, peut importe le fournisseur _(Google cloud, aws, virtual machines...)_
 
 ### <u>Notions</u>:
-	- noeuds (serveurs) : physique ou virtuels
-		- master ou simple noeud d'execution
-	- pods :
-		- ensemble de conteuneurs qui à du sens
-		- avec un ou plusieurs conteneurs
-		- et une instance de kubernetes
+- noeuds (serveurs) : physique ou virtuels
+	- master ou simple noeud d'execution
+- pods :
+	- ensemble de conteuneurs qui à du sens
+	- avec un ou plusieurs conteneurs
+	- et une instance de kubernetes
 
 <a name="definition"></a>
 ## <u>Définition :</u>
 
 <a name="cncf"></a>
 ### <u>CNCF (Cloud Native Computing Foundation):</u>
-	- Amazon
-	- Google
-	- Huawei
-	- Oracle
-	- Docker
-	- Citrix
-	- eBay
-	- Reddit
-	- Mastercard
-	- etc...
+- Amazon
+- Google
+- Huawei
+- Oracle
+- Docker
+- Citrix
+- eBay
+- Reddit
+- Mastercard
+- etc...
 
 ### Sources :
 	[xadki](https://www.youtube.com/watch?v=37VLg7mlHu8&list=PLn6POgpklwWqfzaosSgX2XEKpse5VY2v5&index=1)
