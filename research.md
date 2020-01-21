@@ -40,6 +40,35 @@ Tout ça, peut importe le fournisseur _(Google cloud, aws, virtual machines...)_
 	> ouverture réseau large entre les deux machines
 	> pas de swap
 
+#### Sous minikube
+- [Installation de minikube](#minikube_inst)
+- [Lancement de minikube](#minikube_start)
+- [Accès à minikube](#minikube_access)
+- [Arret de minikube](#minikube_stop)
+
+## Minikube
+On considèrera minikube comme étant une node.<br>
+<a name="minikube_inst"></a>
+### Installation de minikube
+- Il est nécessaire d'installer [Homebrew](https://brew.sh/index_fr)
+- `$ brew install minikube`, minikube s'installera normalement sans trop de difficulté.
+
+<a name="minikube_start"></a>
+### Démarage de minikube
+- `$ minikube start`, lancera minikube
+	- `-p <name>`, créera une node minikube avec un nom custom
+	- `--vm-driver=<VMApp>`, lancera minikube sous l'application VM choisi _(Exemple : virtualbox)_
+
+<a name="minikube_access"></a>
+### Accès à minikube
+De base la VM minikube se lance en mode `headless`, c'est à dire sans ouvrir de fenètre, on peut toute fois y accèdes par `ssh`.
+- `minikube ssh`, permettera d'accéder à minikube
+	- `-p <name>`, précisera la node minikube auquel on veux accéder
+
+<a name="minikube_stop"></a>
+### Arret de minikube
+- `minikube stop`, arrètera la node minikube
+	- `-p <name>`, précisera la node à arréter
 
 <a name="definition"></a>
 ## <u>Définition :</u>
