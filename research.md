@@ -46,8 +46,19 @@ Tout ça, peut importe le fournisseur _(Google cloud, aws, virtual machines...)_
 - [Accès à minikube](#minikube_access)
 - [Arret de minikube](#minikube_stop)
 
+### Le vif du sujet :
+Les binaires qui peuvent être utilisés sont les suivants :
+- kubeadm : installation d'un cluster
+- kubelet : service qui tourne sur les machines (lancements de pods...)
+- kubectl : permet la communication avec le cluster
+Il est nécessaire de s'assurer que, si ils sont utiles et sont installés.
+
+## Fonctionnement de Kubernetes
+Le principe de base de kubernetes est de consevoir un "cluster" avec dans chacune des machines des pods _(Voir [Définition](#pod))_.
+Ces pods sont gérés par des déploiements _(Voir [Définition](#pod))_.
+
 ## Minikube
-On considèrera minikube comme étant une node.<br>
+On considèrera minikube comme étant un pseudocluster composé d'un noeud master et d'un noeud worker en même temps.<br>
 <a name="minikube_inst"></a>
 ### Installation de minikube
 - Il est nécessaire d'installer [Homebrew](https://brew.sh/index_fr)
@@ -56,19 +67,19 @@ On considèrera minikube comme étant une node.<br>
 <a name="minikube_start"></a>
 ### Démarage de minikube
 - `$ minikube start`, lancera minikube
-	- `-p <name>`, créera une node minikube avec un nom custom
+	- `-p <name>`, créera une cluster minikube avec un nom custom
 	- `--vm-driver=<VMApp>`, lancera minikube sous l'application VM choisi _(Exemple : virtualbox)_
 
 <a name="minikube_access"></a>
 ### Accès à minikube
 De base la VM minikube se lance en mode `headless`, c'est à dire sans ouvrir de fenètre, on peut toute fois y accèdes par `ssh`.
 - `minikube ssh`, permettera d'accéder à minikube
-	- `-p <name>`, précisera la node minikube auquel on veux accéder
+	- `-p <name>`, précisera la cluster minikube auquel on veux accéder
 
 <a name="minikube_stop"></a>
 ### Arret de minikube
-- `minikube stop`, arrètera la node minikube
-	- `-p <name>`, précisera la node à arréter
+- `minikube stop`, arrètera la cluster minikube
+	- `-p <name>`, précisera la cluster à arréter
 
 <a name="definition"></a>
 ## <u>Définition :</u>
@@ -85,6 +96,20 @@ De base la VM minikube se lance en mode `headless`, c'est à dire sans ouvrir de
 - Reddit
 - Mastercard
 - etc...
+
+<a name="pod"></a>
+### Pod :
+Un Pod Kubernetes est un groupe d’un ou plusieurs conteneurs, liés entre eux à des fins d’administration et de mise en réseau.
+
+<a name="deployement"></a>
+### Déploiement :
+Un déploiement fournit des mises à jour déclaratives pour les pods et les réplicas.
+
+Vous décrivez un état souhaité dans un déploiement et le contrôleur de déploiement change l'état réel en l'état souhaité à un rythme contrôlé. Vous pouvez définir des déploiements pour créer de nouveaux ReplicaSets, ou pour supprimer des déploiements existants et adopter toutes leurs ressources avec de nouveaux déploiements.
+
+Un Déploiement Kubernetes vérifie l’état de santé de votre Pod et redémarre le conteneur du Pod s’il se termine. Les déploiements sont le moyen recommandé pour gérer la création et la mise à l’échelle des Pods.
+
+En gros ça gère les pods.
 
 ### Sources :
 - [xadki](https://www.youtube.com/watch?v=37VLg7mlHu8&list=PLn6POgpklwWqfzaosSgX2XEKpse5VY2v5&index=1)
