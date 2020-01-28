@@ -56,6 +56,10 @@ Il est nécessaire de s'assurer que, si ils sont utiles et sont installés.
 ## Fonctionnement de Kubernetes
 Le principe de base de kubernetes est de consevoir un "cluster" avec dans chacune des machines des pods _(Voir [Définition](#pod))_.
 Ces pods sont gérés par des déploiements _(Voir [Définition](#pod))_.
+> Kubernetes -> cluster (minikube) -> déploiement -> pod -> container docker
+
+Du coup on créer un déploiement (Dans une console classique, donc pas dans minikube):
+`kubectl create deployement <name> --image=<path to docker image>`
 
 ## Minikube
 On considèrera minikube comme étant un pseudocluster composé d'un noeud master et d'un noeud worker en même temps.<br>
