@@ -58,8 +58,19 @@ Le principe de base de kubernetes est de consevoir un "cluster" avec dans chacun
 Ces pods sont gérés par des déploiements _(Voir [Définition](#pod))_.
 > Kubernetes -> cluster (minikube) -> déploiement -> pod -> container docker
 
-Du coup on créer un déploiement (Dans une console classique, donc pas dans minikube):
-`kubectl create deployement <name> --image=<path to docker image>`
+#### Pour ce projet j'utiliserais minikube pour me facilité la vie, en même temps ça fait cluster et machine.
+Minikube c'est simple, tu le [start](#minikube_start) et paf.. ça fait des chocapics.
+Je conseil d'utilisé la commande suivante pour modifier le `/path/to/.minikube` : `export MINIKUBE_HOME=/path/to/` 
+Une fois qu'il est monté on vas pouvoir lui transferré des fichiers:
+- Soit par ssh : [Use ssh to transfer files](https://hostadvice.com/how-to/how-to-transfer-files-from-one-remote-server-to-another-remote-server-using-ssh/), mais on vous demandera d'accepter une nouvelle clé [rsa](https://doc.fedora-fr.org/wiki/SSH_:_Authentification_par_cl%C3%A9) pour autorisé les transferts etc.. dans un script automatisé ce n'est pas forcement le plus simple/clair à faire. (Si vous avez un truc simple pour ça, hésité pas à proposer un merge :wink:).<br>
+- Soit en utilisant le fichier shared entre dossier `.minikube` et minikube. Ce fichier est générer seulement quand minikube à été démarré aumoin une fois. Donc il est nécessaire de faire un premier démarrage de minikube, puis de le stopper, transferrer les fichiers dans le dossier `/path/to/.minikube/files`, puis de redémarrer minikube pour récupérer les fichiers utiles à la base de minikube (Dans minikube : `$ cd /`).
+<br><br>
+Bon on en est au point où on à tout nos fichiers nécessaire (faut les avoir fait au préalable).<br>
+Pour le projet on à besoin de monté des containers [Docker](https://www.docker.com/), si vous voulez voir un exemple : [ft_server, rchallie](https://github.com/rchallie/ft_Server).<br>
+Quand j'ai éffectuer mes recherches pour utilisé des images custom sous minikube, j'ai trouvé ça : `$ eval $(minikube docker-env)`, si je ne vous décris pas ce que ça fait c'est parce-qu'elle est inutilisable de mon coté car j'ai cru comprendre qu'il était nécessaire d'avoir des droits admin, ce que je n'ais pas. (Rapidement : Ça partage le dossier environnement de docker du daemon Mac/PC/linux à celui de minikube pour partager les images monté/custom et plus largement ce qui touche à Dockerdu coté Mac/PC/linux).<br><br>
+Donc la solution que j'ai trouvé est lié à l'explication sur le transfert de fichier un peu plus haut.
+Je transfert tout ce qui me sert à monté mes différentes images pour chaque services et je monte mes images directement dans minikube.
+Il est possible de demander à minikube d'éxécuter des commande depuis le Mac/PC/linux pour le minikube : `$ minikube ssh 'commande'`
 
 ## Minikube
 On considèrera minikube comme étant un pseudocluster composé d'un noeud master et d'un noeud worker en même temps.<br>
