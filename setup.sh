@@ -18,10 +18,10 @@ else
 fi
 
 echo -ne "\033[1;32m+>\033[0;33m Link folder to goinfre ...\n"
-export MINIKUBE_HOME=/goinfre/$USER/
+export MINIKUBE_HOME=~/Documents/Dev/42/ft_services/
 
 echo -ne "\033[1;32m+>\033[0;33m Clean in ... \n"
-rm -rf /goinfre/$USER/.minikube
+rm -rf ~/Documents/Dev/42/ft_services/.minikube
 
 if minikube &> /dev/null
 then
@@ -74,8 +74,11 @@ cp -avR srcs/containers $MINIKUBE_HOME/.minikube/files/srcs &> /dev/null
 minikube start --vm-driver=virtualbox
 
 minikube ssh 'docker build -t services/nginx /srcs/nginx/'
+minikube ssh 'docker build -t services/influxdb /srcs/influxdb/'
 
 kubectl apply -f srcs/yaml/nginx.yaml
+kubectl apply -f srcs/yaml/influxdb.yaml
+
 server_ip=`minikube ip`
 echo -ne "\033[1;33m+>\033[0;33m IP : $server_ip \n"
 
