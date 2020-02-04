@@ -18,10 +18,10 @@ else
 fi
 
 echo -ne "\033[1;32m+>\033[0;33m Link folder to goinfre ...\n"
-export MINIKUBE_HOME=~/Documents/Dev/42/ft_services/
+export MINIKUBE_HOME=/goinfre/$USER/
 
 echo -ne "\033[1;32m+>\033[0;33m Clean in ... \n"
-rm -rf ~/Documents/Dev/42/ft_services/.minikube
+rm -rf /goinfre/$USER/.minikube
 
 if minikube &> /dev/null
 then
@@ -48,7 +48,7 @@ echo -ne "\033[1;33m+>\033[0;33m Enable addons ...\n"
 minikube addons enable ingress 
 
 # echo -ne "\033[1;32m+>\033[0;33m Start minikube (can take some minutes) ... \n"
-minikube start --vm-driver=virtualbox
+minikube start --vm-driver=virtualbox --extra-config=apiserver.service-node-port-range=1-35000
 
 # echo -ne "\033[1;35m+>\033[0;33m Docker : NGINX :\n"
 # echo -ne "\033[1;33m+>\033[0;33m Build image ...\n"
@@ -71,13 +71,17 @@ echo -ne "\033[1;32m+>\033[0;33m Copy utils files ... \n"
 cp -avR srcs/containers $MINIKUBE_HOME/.minikube/files/srcs &> /dev/null
 
 # echo -ne "\033[1;32m+>\033[0;33m Restart minikube (can take some minutes) ... \n"
-minikube start --vm-driver=virtualbox
+minikube start --vm-driver=virtualbox --extra-config=apiserver.service-node-port-range=1-35000
 
 minikube ssh 'docker build -t services/nginx /srcs/nginx/'
 minikube ssh 'docker build -t services/influxdb /srcs/influxdb/'
+minikube ssh 'docker build -t services/grafana /srcs/grafana/'
+minikube ssh 'docker build -t services/mysql /srcs/mysql/'
 
 kubectl apply -f srcs/yaml/nginx.yaml
 kubectl apply -f srcs/yaml/influxdb.yaml
+kubectl apply -f srcs/yaml/grafana.yaml
+kubectl apply -f srcs/yaml/mysql.yaml
 
 server_ip=`minikube ip`
 echo -ne "\033[1;33m+>\033[0;33m IP : $server_ip \n"
