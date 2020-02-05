@@ -73,15 +73,27 @@ cp -avR srcs/containers $MINIKUBE_HOME/.minikube/files/srcs &> /dev/null
 # echo -ne "\033[1;32m+>\033[0;33m Restart minikube (can take some minutes) ... \n"
 minikube start --vm-driver=virtualbox --extra-config=apiserver.service-node-port-range=1-35000
 
+sleep 1
 minikube ssh 'docker build -t services/nginx /srcs/nginx/'
+sleep 1
 minikube ssh 'docker build -t services/influxdb /srcs/influxdb/'
+sleep 1
 minikube ssh 'docker build -t services/grafana /srcs/grafana/'
+sleep 1
 minikube ssh 'docker build -t services/mysql /srcs/mysql/'
-
+sleep 1
+minikube ssh 'docker build -t services/phpmyadmin /srcs/phpmyadmin/'
+sleep 1
 kubectl apply -f srcs/yaml/nginx.yaml
+sleep 1
 kubectl apply -f srcs/yaml/influxdb.yaml
+sleep 1
 kubectl apply -f srcs/yaml/grafana.yaml
+sleep 1
 kubectl apply -f srcs/yaml/mysql.yaml
+sleep 1
+kubectl apply -f srcs/yaml/phpmyadmin.yaml
+sleep 1
 
 server_ip=`minikube ip`
 echo -ne "\033[1;33m+>\033[0;33m IP : $server_ip \n"

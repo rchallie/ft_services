@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: mysql-svc
   labels:
-    app: myapp
+    app: mysql-app
 spec:
   type: NodePort
   ports:
@@ -12,23 +12,36 @@ spec:
     protocol: TCP
     name: http
   selector:
-    app: myapp
+    app: mysql-app
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  labels:
+    app: mysql-app
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql-deployment
   labels:
-    app: myapp
+    app: mysql-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: myapp
+      app: mysql-app
   template:
     metadata:
       labels:
-        app: myapp
+        app: mysql-app
     spec:
       containers:
       - name: mysql
@@ -36,3 +49,10 @@ spec:
         ports:
         - containerPort: 3306
         imagePullPolicy: Never
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim

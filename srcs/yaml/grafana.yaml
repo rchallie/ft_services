@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: grafana-svc
   labels:
-    app: myapp
+    app: grafana-app
 spec:
   type: NodePort
   ports:
@@ -12,23 +12,23 @@ spec:
     protocol: TCP
     name: http
   selector:
-    app: myapp
+    app: grafana-app
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: grafana-deployment
   labels:
-    app: myapp
+    app: grafana-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: myapp
+      app: grafana-app
   template:
     metadata:
       labels:
-        app: myapp
+        app: grafana-app
     spec:
       containers:
       - name: grafana

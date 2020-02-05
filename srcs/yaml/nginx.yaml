@@ -3,34 +3,35 @@ kind: Service
 metadata:
   name: nginx-svc
   labels:
-    app: myapp
+    app: nginx-app
 spec:
   type: NodePort
   ports:
   - port: 80
+    nodePort: 80
     protocol: TCP
     name: http
   - port: 443
     protocol: TCP
     name: https
   selector:
-    app: myapp
+    app: nginx-app
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
   labels:
-    app: myapp
+    app: nginx-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: myapp
+      app: nginx-app
   template:
     metadata:
       labels:
-        app: myapp
+        app: nginx-app
     spec:
       containers:
       - name: nginx
@@ -39,21 +40,21 @@ spec:
         - containerPort: 80
         - containerPort: 443
         imagePullPolicy: Never
----
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: nginx-ingress
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-  namespace: default
-spec:
-  rules:
-  - host: ftservices.rchallie
-  - http:
-      paths:
-      - path: /
-        backend:
-          serviceName: nginx-svc
-          servicePort: 80
+# ---
+# apiVersion: networking.k8s.io/v1beta1
+# kind: Ingress
+# metadata:
+#   name: nginx-ingress
+#   annotations:
+#     kubernetes.io/ingress.class: nginx
+#     # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+#   namespace: default
+# spec:
+#   rules:
+#   - host: ftservices.rchallie
+#   - http:
+#       paths:
+#       - path: /
+#         backend:
+#           serviceName: nginx-svc
+#           servicePort: 80
