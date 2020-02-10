@@ -8,7 +8,8 @@ $cfg['blowfish_secret'] = '';
 $vars = array(
     'PMA_HOST',
 	'PMA_PORT',
-	'PMA_USER'
+	'PMA_USER',
+	'MYSQL_ROOT_PASSWORD'
 );
 
 /**
@@ -35,16 +36,17 @@ $cfg['Servers'][$i]['AllowNoPassword'] = true;
 /**
  * Variable definition
  */
-if (!empty($_ENV['PMA_HOST'])) {
+if (!empty($_ENV['PMA_HOST']))
 	$cfg['Servers'][$i]['host'] = $_ENV['PMA_HOST'];
-}
-if (!empty($_ENV['PMA_PORT'])) {
+
+if (!empty($_ENV['PMA_PORT']))
 	$cfg['Servers'][$i]['port'] = $_ENV['PMA_PORT'];
-}
-if (!empty($_ENV['PMA_USER'])) {
+
+if (!empty($_ENV['PMA_USER']))
 	$cfg['Servers'][$i]['user'] = $_ENV['PMA_USER'];
-}
-$cfg['Servers'][$i]['password'] = '';
+
+if (!empty($_ENV['MYSQL_ROOT_PASSWORD']))
+	$cfg['Servers'][$i]['password'] = $_ENV['MYSQL_ROOT_PASSWORD'];
 
 $cfg['UploadDir'] = '';
 $cfg['SaveDir'] = '';

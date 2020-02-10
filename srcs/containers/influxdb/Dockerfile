@@ -3,6 +3,8 @@ FROM alpine:latest
 RUN apk update && apk add influxdb \
 && apk add --no-cache --upgrade bash
 
-# RUN echo "CREATE DATABASE db_grafana" | influx
+COPY setup.sh .
 
-CMD influxd run -config /etc/influxdb.conf
+RUN chmod +x setup.sh
+
+CMD ./setup.sh

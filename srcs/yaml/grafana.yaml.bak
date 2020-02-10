@@ -33,6 +33,15 @@ spec:
       containers:
       - name: grafana
         image: services/grafana
+        env:
+          - name: USER
+            value: telegraf
+          - name: INFLUX_URL
+            value: "http://192.168.99.199:8086"
+          - name: INFLUX_SKIP_DATABASE_CREATION
+            value: "false"
+          - name: INFLUX_PASSWORD
+            value: "services"
         ports:
         - containerPort: 3000
         imagePullPolicy: Never

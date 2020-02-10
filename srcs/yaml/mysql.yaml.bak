@@ -74,6 +74,14 @@ spec:
               secretKeyRef:
                 name: mysql-secrets
                 key: root-password
+          - name: USER
+            value: telegraf
+          - name: INFLUX_URL
+            value: "http://IP192.168.99.199:8086"
+          - name: INFLUX_SKIP_DATABASE_CREATION
+            value: "false"
+          - name: INFLUX_PASSWORD
+            value: "services"
         ports:
         - containerPort: 3306
         imagePullPolicy: Never

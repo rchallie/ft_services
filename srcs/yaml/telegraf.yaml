@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: telegraf-svc
+  labels:
+    app: telegraf-app
+spec:
+  type: NodePort
+  ports:
+  - port: 4999
+    nodePort: 4999
+    protocol: TCP
+    name: http
+  selector:
+    app: telegraf-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telegraf-deployment
+  labels:
+    app: telegraf-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: telegraf-app
+  template:
+    metadata:
+      labels:
+        app: telegraf-app
+    spec:
+      containers:
+      - name: telegraf
+        image: services/telegraf
+        ports:
+        - containerPort: 4999
+        imagePullPolicy: Never
+        volumeMounts:
+        - name: dockersock
+          mountPath: "/var/run/docker.sock"
+        env:
+          - name: USER
+            value: telegraf
+          - name: INFLUX_URL
+            value: "http://IP:8086"
+          - name: INFLUX_SKIP_DATABASE_CREATION
+            value: "false"
+          - name: INFLUX_PASSWORD
+            value: "services"
+      volumes:
+      - name: dockersock
+        hostPath:
+          path: /var/run/docker.sock

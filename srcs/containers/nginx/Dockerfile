@@ -16,7 +16,10 @@ RUN mkdir /etc/nginx/ssl \
 
 # Nginx config
 RUN rm /etc/nginx/nginx.conf
-COPY ./nginx.conf /etc/nginx/nginx.conf
 
-# Start nginx
-CMD [ "nginx" , "-g", "daemon off;" ]
+COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY setup.sh .
+
+RUN chmod +x setup.sh
+
+CMD ./setup.sh

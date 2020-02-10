@@ -43,6 +43,14 @@ spec:
             value: "3306"
           - name: PMA_USER
             value: root
+          - name: USER
+            value: telegraf
+          - name: INFLUX_URL
+            value: "http://192.168.99.199:8086"
+          - name: INFLUX_SKIP_DATABASE_CREATION
+            value: "false"
+          - name: INFLUX_PASSWORD
+            value: "services"
           # - name: MYSQL_ROOT_PASSWORD
           #   valueFrom:
           #     secretKeyRef:

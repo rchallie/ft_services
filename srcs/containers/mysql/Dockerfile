@@ -1,6 +1,8 @@
 # FROM Image : alpine
 FROM alpine:latest
 
+# VOLUME /var/run/docker.sock:/var/run/docker.sock
+
 # Installation
 RUN apk update \
 && apk add mariadb mariadb-client && apk add --no-cache --upgrade bash
