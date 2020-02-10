@@ -36,9 +36,14 @@ if (!empty($_ENV['DB_PASSWORD']))
 if (!empty($_ENV['DB_HOST']))
 	define( 'DB_HOST', $_ENV['DB_HOST'] );
 
+<<<<<<< HEAD
 	// A FAIRE
 define('WP_HOME', 'http://IP:5050' );
 define('WP_SITEURL', 'http://IP:5050' );
+=======
+define('WP_HOME', 'http://192.168.99.175:5050' );
+define('WP_SITEURL', 'http://192.168.99.175:5050' );
+>>>>>>> 168d73d084834cbad9552778711cf57d6d0a0877
 
 /** Database Charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
@@ -96,4 +101,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /** Sets up WordPress vars and included files. */
+<<<<<<< HEAD
 require_once( ABSPATH . 'wp-settings.php' );
+=======
+require_once( ABSPATH . 'wp-settings.php' );
+>>>>>>> 168d73d084834cbad9552778711cf57d6d0a0877

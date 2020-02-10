@@ -78,6 +78,7 @@ fi
 
 echo -ne "\033[1;32m+>\033[0;33m Start minikube (can take some minutes) ... \n"
 minikube start --vm-driver=virtualbox
+<<<<<<< HEAD
 
 server_ip=`minikube ip`
 sed_list="srcs/containers/mysql/wp.sql srcs/containers/wordpress/wp-config.php srcs/yaml/telegraf.yaml"
@@ -118,5 +119,56 @@ sleep 1
 sed -i.bak 's/http:\/\/'"$server_ip"'/http:\/\/IP/g' srcs/yaml/telegraf.yaml
 sleep 1
 
+=======
+
+server_ip=`minikube ip`
+sed -i.bak 's/http:\/\/IP/http:\/\/'"$server_ip"'/g' srcs/containers/mysql/wp.sql
+
+minikube ssh "sudo -u root awk 'NR==14{print \"    - --service-node-port-range=1-35000\"}7' /etc/kubernetes/manifests/kube-apiserver.yaml >> tmp && sudo -u root rm /etc/kubernetes/manifests/kube-apiserver.yaml && sudo -u root mv tmp /etc/kubernetes/manifests/kube-apiserver.yaml"
+
+echo -ne "\033[1;33m+>\033[0;33m Enable addons ...\n"
+minikube addons enable ingress 
+
+echo -ne "\033[1;32m+>\033[0;33m Start Desktop docker ... \n"
+echo "N" | ./srcs/init_docker.sh #&> /dev/null
+
+echo -ne "\033[1;32m+>\033[0;33m Waiting for docker ... \n"
+until docker
+do
+	&> /dev/null
+done
+
+echo -ne "\033[1;32m+>\033[0;33m Link docker local image to minikube ... \n"
+eval $(minikube docker-env)
+
+echo -ne "\033[1;32m+>\033[0;33m Build nginx image ... \n"
+docker build -t services/nginx srcs/containers/nginx/ #&> /dev/null
+
+echo -ne "\033[1;32m+>\033[0;33m Build influxdb image ... \n"
+docker build -t services/influxdb srcs/containers/influxdb/ #&> /dev/null
+
+echo -ne "\033[1;32m+>\033[0;33m Build grafana image ... \n"
+docker build -t services/grafana srcs/containers/grafana/ #&> /dev/null
+
+echo -ne "\033[1;32m+>\033[0;33m Build mysql image ... \n"
+docker build -t services/mysql srcs/containers/mysql/ #&> /dev/null
+
+echo -ne "\033[1;32m+>\033[0;33m Build phpmyadmin image ... \n"
+docker build -t services/phpmyadmin srcs/containers/phpmyadmin/ #&> /dev/null
+
+echo -ne "\033[1;32m+>\033[0;33m Build wordpress image ... \n"
+docker build -t services/wordpress srcs/containers/wordpress/ #&> /dev/null
+
+echo -ne "\033[1;32m+>\033[0;33m Create Services ... \n"
+kubectl apply -f srcs/yaml/ #&> /dev/null
+
+
+echo -ne "\033[1;33m+>\033[0;33m IP : $server_ip \n"
+
+echo -ne "\033[1;32m+>\033[0;33m Open website ... \n"
+open http://$server_ip
+
+sed -i.bak 's/http:\/\/'"$server_ip"'/http:\/\/IP/g' srcs/containers/mysql/wp.sql
+>>>>>>> 168d73d084834cbad9552778711cf57d6d0a0877
 # Remplacer les cmd run et expose par un .yaml Pour multi port
 

@@ -47,4 +47,8 @@ spec:
           #   valueFrom:
           #     secretKeyRef:
           #       name: mysql-secrets
+<<<<<<< HEAD
           #       key: root-password
+=======
+          #       key: root-password
+>>>>>>> 168d73d084834cbad9552778711cf57d6d0a0877

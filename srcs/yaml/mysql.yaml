@@ -13,8 +13,36 @@ spec:
     name: http
   selector:
     app: mysql-app
+# ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: mysql-pv-volume
+#   labels:
+#     type: local
+# spec:
+#   storageClassName: manual
+#   capacity:
+#     storage: 2Gi
+#   accessModes:
+#     - ReadWriteOnce
+#   hostPath:
+#     path: "/mnt/data"
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: mysql-pv-claim
+# spec:
+#   storageClassName: manual
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 2Gi
 ---
 apiVersion: v1
+<<<<<<< HEAD
 kind: PersistentVolume
 metadata:
   name: mysql-pv-volume
@@ -40,6 +68,14 @@ spec:
   resources:
     requests:
       storage: 2Gi
+=======
+kind: Secret
+metadata:
+  name: mysql-secrets
+type: Opaque
+data:
+  root-password: c3VwZXItc2VjcmV0LXBhc3N3b3Jk
+>>>>>>> 168d73d084834cbad9552778711cf57d6d0a0877
 ---
 apiVersion: v1
 kind: Secret
@@ -77,10 +113,10 @@ spec:
         ports:
         - containerPort: 3306
         imagePullPolicy: Never
-        volumeMounts:
-        - name: mysql-persistent-storage
-          mountPath: /var/lib/mysql
-      volumes:
-      - name: mysql-persistent-storage
-        persistentVolumeClaim:
-          claimName: mysql-pv-claim
+      #   volumeMounts:
+      #   - name: mysql-persistent-storage
+      #     mountPath: /var/lib/mysql
+      # volumes:
+      # - name: mysql-persistent-storage
+      #   persistentVolumeClaim:
+      #     claimName: mysql-pv-claim

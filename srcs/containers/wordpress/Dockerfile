@@ -8,8 +8,13 @@ RUN wget https://wordpress.org/latest.tar.gz \
 && mv wordpress/* /www
 
 COPY wp-config.php /www/wp-config.php
+<<<<<<< HEAD
 COPY setup.sh .
 
 RUN chmod +x setup.sh
 
 CMD ./setup.sh
+=======
+
+CMD ["php", "-S", "0.0.0.0:5050", "-t", "/www/"]
+>>>>>>> 168d73d084834cbad9552778711cf57d6d0a0877
