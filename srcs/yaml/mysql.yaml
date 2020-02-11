@@ -42,7 +42,6 @@ spec:
 #       storage: 2Gi
 ---
 apiVersion: v1
-<<<<<<< HEAD
 kind: PersistentVolume
 metadata:
   name: mysql-pv-volume
@@ -68,14 +67,6 @@ spec:
   resources:
     requests:
       storage: 2Gi
-=======
-kind: Secret
-metadata:
-  name: mysql-secrets
-type: Opaque
-data:
-  root-password: c3VwZXItc2VjcmV0LXBhc3N3b3Jk
->>>>>>> 168d73d084834cbad9552778711cf57d6d0a0877
 ---
 apiVersion: v1
 kind: Secret

@@ -44,8 +44,4 @@ spec:
           - name: DB_PASSWORD
             value: admin
           - name: DB_HOST
-<<<<<<< HEAD
             value: mysql-svc
-=======
-            value: mysql-svc
->>>>>>> 168d73d084834cbad9552778711cf57d6d0a0877

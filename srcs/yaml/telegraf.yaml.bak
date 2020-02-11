@@ -43,7 +43,7 @@ spec:
           - name: USER
             value: telegraf
           - name: INFLUX_URL
-            value: "http://192.168.99.213:8086"
+            value: "http://192.168.99.214:8086"
           - name: INFLUX_SKIP_DATABASE_CREATION
             value: "false"
           - name: INFLUX_PASSWORD
