@@ -118,5 +118,3 @@ sleep 1
 sed -i.bak 's/http:\/\/'"$server_ip"'/http:\/\/IP/g' srcs/yaml/telegraf.yaml
 sleep 1
 
-# Remplacer les cmd run et expose par un .yaml Pour multi port
-
