@@ -7,4 +7,6 @@ COPY setup.sh .
 
 RUN chmod +x setup.sh
 
+EXPOSE 8086
+
 CMD ./setup.sh

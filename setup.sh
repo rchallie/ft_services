@@ -50,6 +50,13 @@ else
     brew update &> /dev/null
 fi
 
+echo "N" | bash srcs/init_docker.sh
+echo -ne "\033[1;33m+>\033[0;33m Waiting for docker ... \n"
+until docker &> /dev/null
+do
+	&> /dev/null
+done
+
 echo -ne "\033[1;32m+>\033[0;33m Link folder to goinfre ...\n"
 export MINIKUBE_HOME=/goinfre/$USER/
 
@@ -97,18 +104,17 @@ minikube ssh "sudo -u root awk 'NR==14{print \"    - --service-node-port-range=1
 echo -ne "\033[1;32m+>\033[0;33m Link docker local image to minikube ... \n"
 eval $(minikube docker-env)
 
-names="nginx influxdb grafana mysql phpmyadmin wordpress telegraf"
+sed -i.bak 's/MINIKUBE_IP/'"$server_ip"'/g' srcs/containers/ftps/setup.sh
+
+names="nginx influxdb grafana mysql phpmyadmin wordpress telegraf ftps"
 
 for name in $names
 do
 	mount_container $name
 	up_service $name
 done
-
+minikube addons enable ingress
 echo -ne "\033[1;33m+>\033[0;33m IP : $server_ip \n"
-
-echo -ne "\033[1;32m+>\033[0;33m Open website ... \n"
-open http://$server_ip
 
 sleep 1
 sed -i.bak 's/http:\/\/'"$server_ip"'/http:\/\/IP/g' srcs/containers/mysql/wp.sql
@@ -117,4 +123,24 @@ sed -i.bak 's/http:\/\/'"$server_ip"'/http:\/\/IP/g' srcs/containers/wordpress/w
 sleep 1
 sed -i.bak 's/http:\/\/'"$server_ip"'/http:\/\/IP/g' srcs/yaml/telegraf.yaml
 sleep 1
+sed -i.bak 's/'"$server_ip"'/MINIKUBE_IP/g' srcs/containers/ftps/setup.sh
+sleep 1
 
+echo -ne "\033[1;32m+>\033[0;33m Waiting for the site to be up "
+until $(curl --output /dev/null --silent --head --fail http://$server_ip/); do
+	echo -n "."
+	sleep 2
+done;
+
+echo -ne " Open website ... \n"
+open http://$server_ip
+
+### Dashboard
+# minikube dashboard
+
+###
+# ssh admin@$(minikube ip) -p 1234
+
+### Crash Container
+# kubectl exec -it $(kubectl get pods | grep mysql | cut -d" " -f1) -- /bin/sh -c "ps"  
+# kubectl exec -it $(kubectl get pods | grep mysql | cut -d" " -f1) -- /bin/sh -c "kill number" 

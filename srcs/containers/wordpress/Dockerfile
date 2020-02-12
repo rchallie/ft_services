@@ -5,11 +5,13 @@ RUN apk update && apk add wget && mkdir /www \
 
 RUN wget https://wordpress.org/latest.tar.gz \
 && tar -xvf latest.tar.gz \
-&& mv wordpress/* /www
+&& mv wordpress/* /www \
+&& rm -rf /var/cache/apk/*
 
 COPY wp-config.php /www/wp-config.php
 COPY setup.sh .
 
 RUN chmod +x setup.sh
 
+EXPOSE 5050
 CMD ./setup.sh

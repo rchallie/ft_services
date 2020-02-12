@@ -36,7 +36,6 @@ if (!empty($_ENV['DB_PASSWORD']))
 if (!empty($_ENV['DB_HOST']))
 	define( 'DB_HOST', $_ENV['DB_HOST'] );
 
-	// A FAIRE
 define('WP_HOME', 'http://IP:5050' );
 define('WP_SITEURL', 'http://IP:5050' );
 
@@ -96,8 +95,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /** Sets up WordPress vars and included files. */
-<<<<<<< HEAD
 require_once( ABSPATH . 'wp-settings.php' );
-=======
-require_once( ABSPATH . 'wp-settings.php' );
->>>>>>> 168d73d084834cbad9552778711cf57d6d0a0877

@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: influxdb-svc
   labels:
-    app: influx-app
+    app: influxdb-app
 spec:
   type: NodePort
   ports:
@@ -12,23 +12,52 @@ spec:
     protocol: TCP
     name: http
   selector:
-    app: influx-app
+    app: influxdb-app
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: influxdb-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: influxdb-pv-claim
+  labels:
+    app: influxdb-app
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: influxdb-deployment
   labels:
-    app: influx-app
+    app: influxdb-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: influx-app
+      app: influxdb-app
   template:
     metadata:
       labels:
-        app: influx-app
+        app: influxdb-app
     spec:
       containers:
       - name: influxdb
@@ -36,3 +65,10 @@ spec:
         ports:
         - containerPort: 8086
         imagePullPolicy: Never
+        volumeMounts:
+        - name: influxdb-persistent-storage
+          mountPath: /var/lib/influxdb
+      volumes:
+      - name: influxdb-persistent-storage
+        persistentVolumeClaim:
+          claimName: influxdb-pv-claim

@@ -14,5 +14,3 @@ echo "update mysql.user set plugin='mysql_native_password' where user='root';" |
 echo "DROP DATABASE test" | mysql -u root --skip-password
 echo "FLUSH PRIVILEGES;" | mysql -u root --skip-password
 mysql wordpress -u root --password=  < wp.sql
-
-exit

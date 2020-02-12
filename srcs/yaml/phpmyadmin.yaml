@@ -43,8 +43,3 @@ spec:
             value: "3306"
           - name: PMA_USER
             value: root
-          # - name: MYSQL_ROOT_PASSWORD
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: mysql-secrets
-          #       key: root-password

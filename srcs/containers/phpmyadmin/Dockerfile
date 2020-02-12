@@ -5,11 +5,14 @@ RUN apk update && apk upgrade && apk add bash \
 
 RUN wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz \
 && tar -xvf phpMyAdmin-4.9.0.1-all-languages.tar.gz \
-&& mv phpMyAdmin-4.9.0.1-all-languages /www
+&& mv phpMyAdmin-4.9.0.1-all-languages /www \
+&& rm -rf /var/cache/apk/*
 
 COPY phpmyadmin.inc.php /www/config.inc.php
 COPY setup.sh .
 
 RUN chmod +x setup.sh
+
+EXPOSE 5000
 
 CMD ./setup.sh
